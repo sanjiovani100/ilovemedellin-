@@ -1,0 +1,111 @@
+{
+  "name": "I Love Medellin - Booking Confirmation",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "booking-confirmed",
+        "responseMode": "responseNode"
+      },
+      "id": "webhook-booking-confirmed",
+      "name": "Webhook - Booking Confirmed",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [260, 300]
+    },
+    {
+      "parameters": {
+        "amount": 30,
+        "unit": "seconds"
+      },
+      "id": "wait-30-seconds",
+      "name": "Wait 30 Seconds",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "requestMethod": "POST",
+        "url": "={{$env[\"SUPABASE_URL\"]}}/functions/v1/send-whatsapp-confirmation",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{$env[\"SUPABASE_ANON_KEY\"]}}"
+            },
+            {
+              "name": "Content-Type", 
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyContent": "={{JSON.stringify({\n  booking_id: $node[\"Webhook - Booking Confirmed\"].json.body.booking_id,\n  phone: $node[\"Webhook - Booking Confirmed\"].json.body.user_phone,\n  amount: $node[\"Webhook - Booking Confirmed\"].json.body.total_amount,\n  currency: \"COP\",\n  description: $node[\"Webhook - Booking Confirmed\"].json.body.experience_name,\n  message_type: \"booking_confirmation\",\n  language: \"es\"\n})}}"
+      },
+      "id": "send-whatsapp-confirmation",
+      "name": "Send WhatsApp Confirmation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [700, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{{\n  success: true,\n  message: \"Booking confirmation sent\",\n  booking_id: $node[\"Webhook - Booking Confirmed\"].json.body.booking_id,\n  whatsapp_sent: $node[\"Send WhatsApp Confirmation\"].json.success,\n  timestamp: new Date().toISOString()\n}}}"
+      },
+      "id": "success-response",
+      "name": "Success Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [920, 300]
+    }
+  ],
+  "connections": {
+    "Webhook - Booking Confirmed": {
+      "main": [
+        [
+          {
+            "node": "Wait 30 Seconds",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 30 Seconds": {
+      "main": [
+        [
+          {
+            "node": "Send WhatsApp Confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send WhatsApp Confirmation": {
+      "main": [
+        [
+          {
+            "node": "Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-28T00:00:00.000Z",
+  "updatedAt": "2025-05-28T00:00:00.000Z",
+  "settings": {
+    "timezone": "America/Bogota"
+  },
+  "tags": [
+    {
+      "id": "booking-automation",
+      "name": "Booking Automation"
+    }
+  ]
+}

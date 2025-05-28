@@ -1,0 +1,65 @@
+{
+  "booking_confirmation_es": {
+    "name": "booking_confirmation_es",
+    "language": "es",
+    "category": "TRANSACTIONAL",
+    "template": "¡Hola {{1}}! 🎉\n\nTu reserva ha sido confirmada:\n📍 {{2}}\n📅 {{3}} a las {{4}}\n👥 {{5}} personas\n💰 Total: ${{6}} COP\n\n📱 Código de reserva: {{7}}\n\n¿Tienes alguna pregunta? ¡Responde a este mensaje!\n\n*I Love Medellín* 💚",
+    "parameters": [
+      "user_name",
+      "experience_name", 
+      "booking_date",
+      "booking_time",
+      "party_size",
+      "total_amount",
+      "booking_reference"
+    ]
+  },
+  "booking_confirmation_en": {
+    "name": "booking_confirmation_en",
+    "language": "en",
+    "category": "TRANSACTIONAL",
+    "template": "Hi {{1}}! 🎉\n\nYour booking is confirmed:\n📍 {{2}}\n📅 {{3}} at {{4}}\n👥 {{5}} people\n💰 Total: ${{6}} COP\n\n📱 Booking reference: {{7}}\n\nAny questions? Just reply to this message!\n\n*I Love Medellín* 💚",
+    "parameters": [
+      "user_name",
+      "experience_name",
+      "booking_date", 
+      "booking_time",
+      "party_size",
+      "total_amount",
+      "booking_reference"
+    ]
+  },
+  "payment_confirmation_es": {
+    "name": "payment_confirmation_es",
+    "language": "es", 
+    "category": "TRANSACTIONAL",
+    "template": "¡Pago confirmado! 💚\n\nTu pago ha sido procesado exitosamente:\n💰 Monto: ${{1}} COP\n🔢 ID de transacción: {{2}}\n📝 {{3}}\n\nRecibirás los detalles de tu reserva en breve.\n\n¡Gracias por elegir I Love Medellín! 🇨🇴",
+    "parameters": [
+      "amount",
+      "payment_intent_id", 
+      "description"
+    ]
+  },
+  "payment_confirmation_en": {
+    "name": "payment_confirmation_en",
+    "language": "en",
+    "category": "TRANSACTIONAL", 
+    "template": "Payment confirmed! 💚\n\nYour payment has been processed successfully:\n💰 Amount: ${{1}} COP\n🔢 Transaction ID: {{2}}\n📝 {{3}}\n\nYou will receive your booking details shortly.\n\nThank you for choosing I Love Medellín! 🇨🇴",
+    "parameters": [
+      "amount",
+      "payment_intent_id",
+      "description"
+    ]
+  },
+  "booking_reminder_es": {
+    "name": "booking_reminder_es",
+    "language": "es",
+    "category": "TRANSACTIONAL",
+    "template": "¡Recordatorio! ⏰\n\nTu experiencia en Medellín es mañana:\n📍 {{1}}\n⏱️ {{2}}\n📱 Código: {{3}}\n\nNo olvides:\n• Llegar 15 minutos antes\n• Traer tu documento de identidad\n• Usar ropa cómoda\n\n¡Nos vemos pronto! 🇨🇴\n*I Love Medellín*",
+    "parameters": [
+      "experience_name",
+      "booking_time",
+      "booking_reference"
+    ]
+  }
+}
